@@ -1,8 +1,10 @@
+import 'package:e_commerce/domain/entities/ProductResponseEntity.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:readmore/readmore.dart';
+
+import '../../utils/custom_image_network.dart';
 import '../../utils/my_assets.dart';
 import '../../utils/my_colors.dart';
 
@@ -11,6 +13,11 @@ class ProductDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    var selectedProduct = args['product'] as ProductEntity;
+    var productList = args['productList'] as List<ProductEntity>;
+
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
@@ -56,14 +63,17 @@ class ProductDetailsView extends StatelessWidget {
                       indicatorBottomPadding: 20.h,
                       autoPlayInterval: 3000,
                       isLoop: true,
-                      children: [
-                        Image.asset(
-                          MyAssets.announcement1,
-                          fit: BoxFit.cover,
-                          height: 300.h,
-                          width: double.infinity,
-                        )
-                      ]),
+                      children: selectedProduct.images!
+                          .map(
+                            (url) => CustomImageWidget(
+                              url: url,
+                              animation: MyAssets.loadingAnimation,
+                              fit: BoxFit.cover,
+                              height: 300.h,
+                              width: double.infinity,
+                            ),
+                          )
+                          .toList()),
                 ),
               ),
               SizedBox(
@@ -74,7 +84,7 @@ class ProductDetailsView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      'title',
+                      selectedProduct.title ?? '',
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                             fontSize: 18.sp,
                             color: AppColors.darkPrimaryColor,
@@ -83,7 +93,7 @@ class ProductDetailsView extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "EGP price",
+                    "EGP ${selectedProduct.price}",
                     style: TextStyle(
                       fontSize: 18.sp,
                       color: AppColors.darkPrimaryColor,
@@ -111,7 +121,7 @@ class ProductDetailsView extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          "Sold : ",
+                          "Sold : ${selectedProduct.sold}",
                           style:
                               Theme.of(context).textTheme.titleSmall!.copyWith(
                                     color: AppColors.darkPrimaryColor,
@@ -127,14 +137,30 @@ class ProductDetailsView extends StatelessWidget {
                       SizedBox(
                         width: 4.w,
                       ),
-                      Text(
-                        "ratingsAverage",
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                              color: AppColors.darkPrimaryColor,
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                      )
+                      Padding(
+                        padding: const EdgeInsets.only(top: 3),
+                        child: Text(
+                          '${selectedProduct.ratingsAverage}',
+                          style:
+                              Theme.of(context).textTheme.titleSmall!.copyWith(
+                                    color: AppColors.darkPrimaryColor,
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 3),
+                        child: Text(
+                          '(${selectedProduct.ratingsQuantity})',
+                          style:
+                              Theme.of(context).textTheme.titleSmall!.copyWith(
+                                    color: AppColors.darkPrimaryColor,
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                      ),
                     ],
                   )),
                   Container(
@@ -192,15 +218,16 @@ class ProductDetailsView extends StatelessWidget {
                 height: 10.h,
               ),
               ReadMoreText(
-                'Description',
+                selectedProduct.description ?? '',
                 trimLines: 3,
                 trimMode: TrimMode.Line,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontSize: 14.sp,
-                      color: AppColors.primaryColor.withOpacity(
-                        0.6,
-                      ),
-                    ),
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primaryColor.withOpacity(
+                    0.7,
+                  ),
+                ),
                 trimCollapsedText: ' Show More',
                 trimExpandedText: ' Show Less',
                 moreStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -216,7 +243,7 @@ class ProductDetailsView extends StatelessWidget {
                 height: 16.h,
               ),
               SizedBox(
-                height: 120.h,
+                height: 40.h,
               ),
               Row(
                 children: [
@@ -234,7 +261,7 @@ class ProductDetailsView extends StatelessWidget {
                         height: 5.h,
                       ),
                       Text(
-                        "EGP price",
+                        "EGP ${selectedProduct.price}",
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!
@@ -260,7 +287,10 @@ class ProductDetailsView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          const Icon(Icons.add_shopping_cart_outlined),
+                          const Icon(
+                            Icons.add_shopping_cart_outlined,
+                            color: Colors.white,
+                          ),
                           Text("Add to cart",
                               style: Theme.of(context).textTheme.titleMedium),
                         ],
@@ -268,6 +298,48 @@ class ProductDetailsView extends StatelessWidget {
                     ),
                   )
                 ],
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Text(
+                  'Frequently bought together',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryColor),
+                ),
+              ),
+              SizedBox(
+                height: 150, // Adjust the height as needed
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: productList.length,
+                  // Assuming you have a list of other products
+                  itemBuilder: (context, index) {
+                    // Assuming each product has an image URL
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              ProductDetailsView.routeName,
+                              arguments: {
+                                'product': productList[index],
+                                // Sending the pressed product
+                                'productList': productList,
+                              });
+                        },
+                        child: CustomImageWidget(
+                          url: productList[index].imageCover ?? '',
+                          animation: MyAssets.loadingAnimation,
+                          fit: BoxFit.cover,
+                          height: 120,
+                          width: 120,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),

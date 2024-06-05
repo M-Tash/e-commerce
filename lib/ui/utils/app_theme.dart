@@ -16,5 +16,10 @@ class AppTheme {
           fontWeight: FontWeight.w400,
           color: AppColors.whiteColor,
         ),
+        titleSmall: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: AppColors.whiteColor,
+        ),
       ));
 }

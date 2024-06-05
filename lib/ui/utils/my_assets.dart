@@ -46,4 +46,7 @@ class MyAssets {
   static const shoesItemImage1 = "assets/images/items/shoes-1.png";
   static const shoesItemImage2 = "assets/images/items/shoes-2.png";
   static const shoesItemImage3 = "assets/images/items/shoes-3.png";
+
+  //animations
+  static const loadingAnimation = "assets/animations/loading.json";
 }

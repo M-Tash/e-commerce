@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../../domain/entities/CategoryOrBrandResponseEntity.dart';
-import '../../../../utils/my_assets.dart';
-import '../../../../utils/my_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
+
+import '../../../../../domain/entities/CategoryOrBrandResponseEntity.dart';
+import '../../../../utils/my_colors.dart';
 
 class CategoryOrBrandItem extends StatelessWidget {
   final CategoryOrBrandEntity categoryEntity;
@@ -26,6 +27,19 @@ class CategoryOrBrandItem extends StatelessWidget {
                   fit: BoxFit.fill,
                   width: double.infinity,
                   height: double.infinity,
+                  loadingBuilder: (context, child, loadingProgress) =>
+                      loadingProgress == null
+                          ? child
+                          : Center(
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
+                                child: Lottie.asset(
+                                  'assets/animations/loading.json',
+                                  width: 50,
+                                  height: 50,
+                                ),
+                              ),
+                            ),
                 ),
               ),
             ),
