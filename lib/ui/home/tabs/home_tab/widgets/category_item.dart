@@ -49,7 +49,7 @@ class CategoryOrBrandItem extends StatelessWidget {
           height: 8.h,
         ),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: Text(
             categoryEntity.name ?? '',
             textWidthBasis: TextWidthBasis.longestLine,

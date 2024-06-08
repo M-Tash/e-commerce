@@ -1,8 +1,11 @@
+import 'package:e_commerce/ui/auth/login/login_screen.dart';
+import 'package:e_commerce/ui/utils/shared_preference.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../utils/custome_text_field_item.dart';
 import '../../../utils/my_assets.dart';
 import '../../../utils/my_colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ProfileTab extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
@@ -18,26 +21,28 @@ class ProfileTab extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Form(
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 10.h,
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Image.asset(
-                          MyAssets.logo,
-                          color: AppColors.primaryColor,
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15),
+                          child: Image.asset(
+                            width: 150,
+                            MyAssets.logo,
+                          ),
                         ),
                         IconButton(
                             onPressed: () {
-                              //todo: back to login
+                              SharedPreference.removeData(key: 'Token');
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  LoginScreen.routeName, (route) => false);
                             },
                             icon: Icon(
                               Icons.logout,

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce/data/api/ApiManager.dart';
+import 'package:e_commerce/domain/entities/AddCartResponseEntity.dart';
 import 'package:e_commerce/domain/entities/CategoryOrBrandResponseEntity.dart';
 import 'package:e_commerce/domain/entities/ProductResponseEntity.dart';
 import 'package:e_commerce/domain/entities/failures.dart';
@@ -34,6 +35,28 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
   @override
   Future<Either<Failures, ProductResponseEntity>> getAllProducts() async {
     var either = await apiManager.getAllProducts();
+    return either.fold((l) {
+      return Left(l);
+    }, (response) {
+      return Right(response);
+    });
+  }
+
+  @override
+  Future<Either<Failures, AddCartResponseEntity>> addToCart(
+      String productId) async {
+    var either = await apiManager.addToCart(productId);
+    return either.fold((l) {
+      return Left(l);
+    }, (response) {
+      return Right(response);
+    });
+  }
+
+  @override
+  Future<Either<Failures, AddCartResponseEntity>> addToWishList(
+      String productId) async {
+    var either = await apiManager.addToWishList(productId);
     return either.fold((l) {
       return Left(l);
     }, (response) {

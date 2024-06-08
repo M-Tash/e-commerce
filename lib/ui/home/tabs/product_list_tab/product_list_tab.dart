@@ -6,15 +6,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../utils/my_assets.dart';
-import '../../../utils/my_colors.dart';
 import '../../product_details/product_details_view.dart';
-import '../home_tab/widgets/custom_text_field.dart';
+import '../home_tab/widgets/custom_search_with_shopping_cart.dart';
 import 'cubit/product_list_tab_view_model.dart';
 import 'widgets/grid_view_card_item.dart';
 
 class ProductListTab extends StatelessWidget {
   ProductListTabViewModel viewModel = ProductListTabViewModel(
-      getAllProductsUseCase: injectGetAllProductsUseCase());
+    getAllProductsUseCase: injectGetAllProductsUseCase(),
+  );
+
+  ProductListTab({super.key});
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductListTabViewModel, ProductListStates>(
@@ -22,34 +24,22 @@ class ProductListTab extends StatelessWidget {
       builder: (context, state) {
         return SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Image.asset(
-                    MyAssets.logo,
-                    color: AppColors.primaryColor,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.asset(
+                      width: 150,
+                      MyAssets.logo,
+                    ),
                   ),
                   SizedBox(
                     height: 18.h,
                   ),
-                  Row(children: [
-                    Expanded(
-                      child: CustomTextField(),
-                    ),
-                    SizedBox(
-                      width: 24.w,
-                    ),
-                    ImageIcon(
-                      AssetImage(MyAssets.shoppingCart),
-                      size: 28.sp,
-                      color: AppColors.primaryColor,
-                    ),
-                  ]),
+                  CustomSearchWithShoppingCart(),
                   SizedBox(
                     height: 24.h,
                   ),

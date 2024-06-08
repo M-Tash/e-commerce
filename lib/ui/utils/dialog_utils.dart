@@ -35,11 +35,22 @@ class DialogUtils {
     required String message,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: AppColors.blueColor,
-        content: Center(
-            child: Text(
+      backgroundColor: AppColors.primaryColor,
+      content: Center(
+        child: Text(
           message,
-          style: Theme.of(context).textTheme.bodyLarge,
-        ))));
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge!
+              .copyWith(color: Colors.white),
+        ),
+      ),
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16.0),
+      ),
+      margin: EdgeInsets.all(16.0),
+      elevation: 6.0,
+    ));
   }
 }

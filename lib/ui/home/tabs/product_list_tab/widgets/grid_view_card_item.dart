@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../utils/custom_image_network.dart';
 import '../../../../utils/my_assets.dart';
 import '../../../../utils/my_colors.dart';
+import '../../../home_screen/cubit/home_screen_view_model.dart';
 
 class GridViewCardItem extends StatelessWidget {
   bool isWishListed = false;
@@ -125,6 +126,8 @@ class GridViewCardItem extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
+                    HomeScreenViewModel.getBloc(context)
+                        .addToCart(productEntity.id ?? '');
                     //todo: add to cart
                   },
                   splashColor: Colors.transparent,

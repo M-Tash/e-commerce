@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:e_commerce/domain/entities/AddCartResponseEntity.dart';
 import 'package:e_commerce/domain/entities/CategoryOrBrandResponseEntity.dart';
 import 'package:e_commerce/domain/entities/ProductResponseEntity.dart';
 import 'package:e_commerce/domain/entities/failures.dart';
@@ -23,5 +24,16 @@ class HomeRepositoryImpl implements HomeRepository {
   @override
   Future<Either<Failures, ProductResponseEntity>> getAllProducts() {
     return remoteDataSource.getAllProducts();
+  }
+
+  @override
+  Future<Either<Failures, AddCartResponseEntity>> addToCart(String productId) {
+    return remoteDataSource.addToCart(productId);
+  }
+
+  @override
+  Future<Either<Failures, AddCartResponseEntity>> addToWishList(
+      String productId) {
+    return remoteDataSource.addToWishList(productId);
   }
 }

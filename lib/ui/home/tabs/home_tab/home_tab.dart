@@ -4,13 +4,13 @@ import 'package:e_commerce/ui/home/tabs/home_tab/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
+
 import '../../../utils/my_assets.dart';
-import '../../../utils/my_colors.dart';
 import 'widgets/annountcements_section.dart';
 import 'widgets/categories_or_brands_section.dart';
 import 'widgets/custom_search_with_shopping_cart.dart';
 import 'widgets/row_section_widgets.dart';
-import 'package:lottie/lottie.dart';
 
 class HomeTab extends StatelessWidget {
   HomeTabViewModel viewModel = HomeTabViewModel(
@@ -26,23 +26,25 @@ class HomeTab extends StatelessWidget {
       builder: (context, state) {
         return SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 17.w),
+            padding: EdgeInsets.symmetric(horizontal: 8.w),
             child: SingleChildScrollView(
               child: Column(
                 // mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Image.asset(
-                    MyAssets.logo,
-                    color: AppColors.primaryColor,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(15),
+                    child: Image.asset(
+                      MyAssets.logo,
+                    ),
                   ),
                   SizedBox(
                     height: 18.h,
                   ),
-                  CustomSearchWithShoppingCart(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: CustomSearchWithShoppingCart(),
+                  ),
                   SizedBox(
                     height: 16.h,
                   ),

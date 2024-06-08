@@ -25,7 +25,7 @@ class MyAssets {
       "assets/icons/favourite_selected.png";
   static const String starIcon = "assets/icons/star.png";
 
-  static const logo = "assets/icons/star.png";
+  static const logo = "assets/images/logo.png";
   static const shoppingCart = "assets/icons/shopping_cart.png";
 
   // Announcements Images
