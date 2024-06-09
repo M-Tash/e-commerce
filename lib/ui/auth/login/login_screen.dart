@@ -46,6 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
             });
             SharedPreference.saveData(
                 key: 'Token', value: state.authResultEntity.token);
+            SharedPreference.saveData(
+                key: 'name', value: state.authResultEntity.userEntity!.name);
+            SharedPreference.saveData(
+                key: 'email', value: state.authResultEntity.userEntity!.email);
             await Future.delayed(Duration(seconds: 1)); // Short delay
             Navigator.pushReplacementNamed(context, HomeScreen.routeName);
             DialogUtils.showSnackBar(

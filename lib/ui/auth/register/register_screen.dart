@@ -41,6 +41,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           bool isLoading = false;
           SharedPreference.saveData(
               key: 'Token', value: state.authResultEntity.token);
+          SharedPreference.saveData(
+              key: 'name', value: state.authResultEntity.userEntity!.name);
+          SharedPreference.saveData(
+              key: 'email', value: state.authResultEntity.userEntity!.email);
           await Future.delayed(Duration(seconds: 1));
           Navigator.pushReplacementNamed(context, HomeScreen.routeName);
           DialogUtils.showSnackBar(

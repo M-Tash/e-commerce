@@ -9,7 +9,6 @@ import 'package:lottie/lottie.dart';
 import '../../../utils/my_assets.dart';
 import 'widgets/annountcements_section.dart';
 import 'widgets/categories_or_brands_section.dart';
-import 'widgets/custom_search_with_shopping_cart.dart';
 import 'widgets/row_section_widgets.dart';
 
 class HomeTab extends StatelessWidget {
@@ -40,10 +39,6 @@ class HomeTab extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 18.h,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: CustomSearchWithShoppingCart(),
                   ),
                   SizedBox(
                     height: 16.h,

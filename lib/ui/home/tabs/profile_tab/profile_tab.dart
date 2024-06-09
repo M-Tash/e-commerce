@@ -7,13 +7,34 @@ import '../../../utils/custome_text_field_item.dart';
 import '../../../utils/my_assets.dart';
 import '../../../utils/my_colors.dart';
 
-class ProfileTab extends StatelessWidget {
+class ProfileTab extends StatefulWidget {
+  @override
+  State<ProfileTab> createState() => _ProfileTabState();
+}
+
+class _ProfileTabState extends State<ProfileTab> {
+  var name;
+  var email;
+
+  @override
+  void initState() {
+    name = SharedPreference.getData(key: 'name');
+    email = SharedPreference.getData(key: 'email');
+    super.initState();
+  }
+
   var formKey = GlobalKey<FormState>();
+
   var nameController = TextEditingController();
+
   var passwordController = TextEditingController();
+
   var addressController = TextEditingController();
+
   var emailController = TextEditingController();
+
   var phoneController = TextEditingController();
+
   bool isObsecure = true;
 
   @override
@@ -54,7 +75,7 @@ class ProfileTab extends StatelessWidget {
                       height: 18.h,
                     ),
                     Text(
-                      "WELCOME, MARIAM",
+                      "WELCOME, $name",
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -64,7 +85,7 @@ class ProfileTab extends StatelessWidget {
                       height: 8.h,
                     ),
                     Text(
-                      "Mariam@gmail.com",
+                      email,
                       style: TextStyle(color: AppColors.blueGreyColor),
                     ),
                     SizedBox(
@@ -72,7 +93,7 @@ class ProfileTab extends StatelessWidget {
                     ),
                     CustomTextFieldItem(
                       fieldName: 'Your Full Name',
-                      hintText: 'Mariam mahmoud hafez',
+                      hintText: 'Mohamed Tash',
                       controller: nameController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -85,7 +106,7 @@ class ProfileTab extends StatelessWidget {
                     ),
                     CustomTextFieldItem(
                       fieldName: 'Your E-mail',
-                      hintText: 'Mariam@gmail.com',
+                      hintText: 'Tash@gmail.com',
                       controller: emailController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -121,7 +142,7 @@ class ProfileTab extends StatelessWidget {
                     ),
                     CustomTextFieldItem(
                       fieldName: 'Your Mobile Number',
-                      hintText: '01021212121',
+                      hintText: '01002550255',
                       controller: phoneController,
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {

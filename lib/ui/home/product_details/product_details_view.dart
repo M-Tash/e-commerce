@@ -1,15 +1,22 @@
 import 'package:e_commerce/domain/entities/ProductResponseEntity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:readmore/readmore.dart';
 
+import '../../../domain/di.dart';
 import '../../utils/custom_image_network.dart';
 import '../../utils/my_assets.dart';
 import '../../utils/my_colors.dart';
+import '../cart/cart_screen.dart';
+import '../tabs/product_list_tab/cubit/product_list_tab_view_model.dart';
 
 class ProductDetailsView extends StatelessWidget {
   static String routeName = "product-details-view";
+  ProductListTabViewModel viewModel = ProductListTabViewModel(
+      getAllProductsUseCase: injectGetAllProductsUseCase(),
+      addToCartUseCase: injectAddToCartUseCase());
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +24,12 @@ class ProductDetailsView extends StatelessWidget {
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     var selectedProduct = args['product'] as ProductEntity;
     var productList = args['productList'] as List<ProductEntity>;
+    var onAddToCart = args['onAddToCart'] as VoidCallback;
 
-    return Scaffold(
-      appBar: AppBar(
+    return BlocProvider<ProductListTabViewModel>(
+      create: (context) => viewModel..getAllProducts(),
+      child: Scaffold(
+        appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         centerTitle: true,
         elevation: 0,
@@ -34,13 +44,10 @@ class ProductDetailsView extends StatelessWidget {
         actions: [
           IconButton(
             padding: EdgeInsets.zero,
-            onPressed: () {},
-            icon: Icon(Icons.search),
-          ),
-          IconButton(
-            padding: EdgeInsets.zero,
-            onPressed: () {},
-            icon: Icon(Icons.shopping_cart_outlined),
+              onPressed: () {
+                Navigator.pushNamed(context, CartScreen.routeName);
+              },
+              icon: Icon(Icons.shopping_cart_outlined),
           ),
         ],
       ),
@@ -163,44 +170,6 @@ class ProductDetailsView extends StatelessWidget {
                       ),
                     ],
                   )),
-                  Container(
-                    height: 50.h,
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(
-                        100.r,
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.remove_circle_outline_rounded,
-                            color: AppColors.whiteColor,
-                            size: 28.sp,
-                          ),
-                        ),
-                        Text(
-                          '1',
-                          style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.whiteColor),
-                        ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          icon: Icon(
-                            Icons.add_circle_outline_rounded,
-                            color: AppColors.whiteColor,
-                            size: 28.sp,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               ),
               SizedBox(
@@ -277,8 +246,10 @@ class ProductDetailsView extends StatelessWidget {
                   ),
                   Expanded(
                     child: ElevatedButton(
-                      onPressed: () {},
-                      style: TextButton.styleFrom(
+                        onPressed: () {
+                          onAddToCart();
+                        },
+                        style: TextButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.r),
@@ -327,7 +298,11 @@ class ProductDetailsView extends StatelessWidget {
                                 'product': productList[index],
                                 // Sending the pressed product
                                 'productList': productList,
-                              });
+                                  'onAddToCart': () {
+                                    viewModel
+                                        .addToCart(productList[index].id ?? '');
+                                  }
+                                });
                         },
                         child: CustomImageWidget(
                           url: productList[index].imageCover ?? '',
@@ -344,6 +319,7 @@ class ProductDetailsView extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

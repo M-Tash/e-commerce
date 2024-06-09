@@ -11,21 +11,48 @@ import '../home_tab/widgets/custom_search_with_shopping_cart.dart';
 import 'cubit/product_list_tab_view_model.dart';
 import 'widgets/grid_view_card_item.dart';
 
-class ProductListTab extends StatelessWidget {
-  ProductListTabViewModel viewModel = ProductListTabViewModel(
-    getAllProductsUseCase: injectGetAllProductsUseCase(),
-  );
-
+class ProductListTab extends StatefulWidget {
   ProductListTab({super.key});
+
+  @override
+  _ProductListTabState createState() => _ProductListTabState();
+}
+
+class _ProductListTabState extends State<ProductListTab> {
+  ProductListTabViewModel viewModel = ProductListTabViewModel(
+      getAllProductsUseCase: injectGetAllProductsUseCase(),
+      addToCartUseCase: injectAddToCartUseCase());
+
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel.getAllProducts();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    viewModel.filterProducts(_searchController.text);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductListTabViewModel, ProductListStates>(
-      bloc: viewModel..getAllProducts(),
-      builder: (context, state) {
-        return SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            child: Column(
+    return BlocProvider<ProductListTabViewModel>(
+      create: (context) => viewModel,
+      child: BlocBuilder<ProductListTabViewModel, ProductListStates>(
+        builder: (context, state) {
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.w),
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -39,7 +66,10 @@ class ProductListTab extends StatelessWidget {
                   SizedBox(
                     height: 18.h,
                   ),
-                  CustomSearchWithShoppingCart(),
+                  CustomSearchWithShoppingCart(
+                    searchController: _searchController,
+                    onSearchChanged: (value) => _onSearchChanged(),
+                  ),
                   SizedBox(
                     height: 24.h,
                   ),
@@ -54,7 +84,7 @@ class ProductListTab extends StatelessWidget {
                         )
                       : Expanded(
                           child: GridView.builder(
-                            itemCount: viewModel.productList.length,
+                            itemCount: viewModel.filteredProductList.length,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 2,
@@ -70,22 +100,32 @@ class ProductListTab extends StatelessWidget {
                                   Navigator.of(context).pushNamed(
                                       ProductDetailsView.routeName,
                                       arguments: {
-                                        'product': viewModel.productList[index],
-                                        // Sending the pressed product
-                                        'productList': viewModel.productList,
+                                        'product': viewModel
+                                            .filteredProductList[index],
+                                        'productList':
+                                            viewModel.filteredProductList,
+                                        'onAddToCart': () {
+                                          viewModel.addToCart(viewModel
+                                                  .filteredProductList[index]
+                                                  .id ??
+                                              '');
+                                        }
                                       });
                                 },
                                 child: GridViewCardItem(
-                                  productEntity: viewModel.productList[index],
+                                  productEntity:
+                                      viewModel.filteredProductList[index],
                                 ),
                               );
                             },
                           ),
-                        )
-                ]),
-          ),
-        );
-      },
+                        ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../utils/custom_image_network.dart';
 import '../../../../utils/my_assets.dart';
 import '../../../../utils/my_colors.dart';
-import '../../../home_screen/cubit/home_screen_view_model.dart';
+import '../cubit/product_list_tab_view_model.dart';
 
 class GridViewCardItem extends StatelessWidget {
   bool isWishListed = false;
@@ -41,24 +41,6 @@ class GridViewCardItem extends StatelessWidget {
                   width: double.infinity,
                 ),
               ),
-              Positioned(
-                top: 5.h,
-                right: 2.w,
-                child: CircleAvatar(
-                  backgroundColor: Colors.white,
-                  radius: 15,
-                  child: IconButton(
-                    color: AppColors.primaryColor,
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    icon: isWishListed == true
-                        ? const Icon(Icons.favorite_rounded)
-                        : const Icon(
-                            Icons.favorite_border_rounded,
-                          ),
-                  ),
-                ),
-              )
             ],
           ),
           SizedBox(
@@ -126,7 +108,7 @@ class GridViewCardItem extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    HomeScreenViewModel.getBloc(context)
+                    ProductListTabViewModel.getBloc(context)
                         .addToCart(productEntity.id ?? '');
                     //todo: add to cart
                   },

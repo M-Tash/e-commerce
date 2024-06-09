@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../utils/my_assets.dart';
 import '../../../utils/my_colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget buildCustomBottomNavigationBar(
     {required int selectedIndex,
@@ -56,23 +57,6 @@ Widget buildCustomBottomNavigationBar(
               ),
             ),
             label: "CATEGORY"),
-        BottomNavigationBarItem(
-            icon: CircleAvatar(
-              foregroundColor: selectedIndex == 2
-                  ? AppColors.primaryColor
-                  : AppColors.whiteColor,
-              backgroundColor: selectedIndex == 2
-                  ? AppColors.whiteColor
-                  : Colors.transparent,
-              radius: 20.r,
-              child: ImageIcon(
-                size: 40.sp,
-                const AssetImage(
-                  MyAssets.notSelectedWishlistIcon,
-                ),
-              ),
-            ),
-            label: "WISHLIST"),
         BottomNavigationBarItem(
             icon: CircleAvatar(
               foregroundColor: selectedIndex == 3

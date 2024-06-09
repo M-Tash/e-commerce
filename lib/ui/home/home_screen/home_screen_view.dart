@@ -3,7 +3,6 @@ import 'package:e_commerce/ui/home/home_screen/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/di.dart';
 import 'widget/custom_bottom_navigation_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +16,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   HomeScreenViewModel viewModel = HomeScreenViewModel(
-    addToCartUseCase: injectAddToCartUseCase(),
   );
 
   @override
