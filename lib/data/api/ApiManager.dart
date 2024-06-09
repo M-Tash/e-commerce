@@ -114,24 +114,6 @@ class ApiManager {
     );
   }
 
-  Future<Either<Failures, AddCartResponseDto>> addToWishList(
-      String productId) async {
-    Uri url = Uri.https(ApiConstants.baseUrl, ApiEndPoints.wishListApi);
-    var token = SharedPreference.getData(key: 'Token');
-    dynamic body = {'productId': productId};
-    dynamic headers = {'token': token.toString()};
-    var result = await apiHelper.post(
-        url: url,
-        errorMessage: 'Failed to add items. Please try again.',
-        body: body,
-        headers: headers);
-    return result.fold(
-      (failure) => Left(failure),
-      (jsonResponse) => Right(
-        AddCartResponseDto.fromJson(jsonResponse),
-      ),
-    );
-  }
 
   Future<Either<Failures, GetCartResponseDto>> getCart() async {
     Uri url = Uri.https(ApiConstants.baseUrl, ApiEndPoints.cartApi);

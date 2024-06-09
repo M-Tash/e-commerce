@@ -52,15 +52,4 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
       return Right(response);
     });
   }
-
-  @override
-  Future<Either<Failures, AddCartResponseEntity>> addToWishList(
-      String productId) async {
-    var either = await apiManager.addToWishList(productId);
-    return either.fold((l) {
-      return Left(l);
-    }, (response) {
-      return Right(response);
-    });
-  }
 }

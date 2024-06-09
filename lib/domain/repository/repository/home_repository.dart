@@ -13,7 +13,4 @@ abstract class HomeRepository {
   Future<Either<Failures, ProductResponseEntity>> getAllProducts();
 
   Future<Either<Failures, AddCartResponseEntity>> addToCart(String productId);
-
-  Future<Either<Failures, AddCartResponseEntity>> addToWishList(
-      String productId);
 }

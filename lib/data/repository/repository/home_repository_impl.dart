@@ -30,10 +30,4 @@ class HomeRepositoryImpl implements HomeRepository {
   Future<Either<Failures, AddCartResponseEntity>> addToCart(String productId) {
     return remoteDataSource.addToCart(productId);
   }
-
-  @override
-  Future<Either<Failures, AddCartResponseEntity>> addToWishList(
-      String productId) {
-    return remoteDataSource.addToWishList(productId);
-  }
 }
