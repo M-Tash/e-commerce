@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 200,
+                    height: 230,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
-                      height: 500,
+                      height: 480,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: SingleChildScrollView(
@@ -176,19 +176,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           return null;
                                         },
                                       ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 200.w),
-                                        child: TextButton(
-                                            onPressed: () {
-                                              //todo:forget password
-                                            },
-                                            child: Text("Forgot Password",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleMedium!
-                                                    .copyWith(
-                                                        fontSize: 20.sp))),
-                                      ),
+                                      SizedBox(
+                                        height: 3,
+                                      )
                                     ],
                                   ),
                                 ),
