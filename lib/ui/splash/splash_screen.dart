@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:e_commerce/ui/auth/login/login_screen.dart';
 import 'package:e_commerce/ui/home/home_screen/home_screen_view.dart';
+import 'package:e_commerce/ui/intro/intro_screen.dart';
 import 'package:e_commerce/ui/utils/shared_preference.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await SharedPreference.init();
     var user = SharedPreference.getData(key: 'Token');
     if (user == null) {
-      route = LoginScreen.routeName;
+      route = IntroScreen.routeName;
     } else {
       route = HomeScreen.routeName;
     }
@@ -41,13 +41,11 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Image.asset(
-        'assets/images/SplashScreen.png',
-        fit: BoxFit.cover,
-        width: double.infinity,
-        height: double.infinity,
-      ),
+    return Image.asset(
+      'assets/images/SplashScreen.png',
+      fit: BoxFit.cover,
+      width: double.infinity,
+      height: double.infinity,
     );
   }
 }
