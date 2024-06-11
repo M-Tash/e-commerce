@@ -8,7 +8,7 @@ import '../../../../utils/my_colors.dart';
 class CategoryOrBrandItem extends StatelessWidget {
   final CategoryOrBrandEntity categoryEntity;
 
-  CategoryOrBrandItem({required this.categoryEntity});
+  const CategoryOrBrandItem({super.key, required this.categoryEntity});
 
   @override
   Widget build(BuildContext context) {

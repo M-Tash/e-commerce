@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
 import 'package:e_commerce/data/api/ApiConstants.dart';
 import 'package:e_commerce/data/api/ApiHelper.dart';
+import 'package:e_commerce/data/api/api_keys/ApiKeys.dart';
 import 'package:e_commerce/data/model/request/LoginRequest.dart';
 import 'package:e_commerce/data/model/request/RegisterRequest.dart';
 import 'package:e_commerce/data/model/response/AddCartResponseDto.dart';
@@ -11,6 +14,7 @@ import 'package:e_commerce/data/model/response/ProductResponseDto.dart';
 import 'package:e_commerce/data/model/response/RegisterResponseDto.dart';
 import 'package:e_commerce/domain/entities/failures.dart';
 import 'package:e_commerce/ui/utils/shared_preference.dart';
+import 'package:http/http.dart' as http;
 
 class ApiManager {
   ApiManager._();
@@ -167,5 +171,56 @@ class ApiManager {
         GetCartResponseDto.fromJson(jsonResponse),
       ),
     );
+  }
+
+  Future<String?> createPayMobPayment(int amount) async {
+    final Uri url = Uri.https(ApiConstants.paymentBaseUrl,
+        ApiEndPoints.paymentApi); // Replace with the actual Paymob API endpoint
+    final headers = {
+      'Authorization': ApiKeys.paymentAPi,
+      'Content-Type': 'application/json',
+    };
+
+    final body = {
+      'amount': amount * 100,
+      'currency': 'EGP',
+      'payment_methods': [4594534, 'card'],
+      'items': [
+        {'name': 'Item name', 'amount': amount * 100, 'quantity': 1}
+      ],
+      'billing_data': {
+        'first_name': 'dumy',
+        'last_name': 'dumy',
+        'phone_number': 'dumy'
+      }
+    };
+
+    try {
+      final response = await http.post(
+        url,
+        headers: headers,
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        // Parse the response body
+        final responseBody = jsonDecode(response.body);
+
+        // Extract the token
+        final token = responseBody['payment_keys'][0]['key'];
+
+        // Return the token
+        print(token);
+        return token;
+      } else {
+        // Handle error
+        print('Error: ${response.statusCode} - ${response.reasonPhrase}');
+        return null;
+      }
+    } catch (e) {
+      // Handle any exceptions
+      print('Exception occurred: $e');
+      return null;
+    }
   }
 }

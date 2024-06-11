@@ -1,8 +1,5 @@
 import 'package:e_commerce/domain/entities/UserEntity.dart';
 
-/// name : "ahmed"
-/// email : "ahmedmutti1555@gmail.com"
-/// role : "user"
 
 class UserDto {
   UserDto({

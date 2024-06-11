@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../utils/custom_image_network.dart';
+import '../../../../utils/dialog_utils.dart';
 import '../../../../utils/my_assets.dart';
 import '../../../../utils/my_colors.dart';
 import '../cubit/product_list_tab_view_model.dart';
@@ -11,7 +12,7 @@ class GridViewCardItem extends StatelessWidget {
   bool isWishListed = false;
   ProductEntity productEntity;
 
-  GridViewCardItem({required this.productEntity});
+  GridViewCardItem({super.key, required this.productEntity});
 
   //todo: product
   @override
@@ -110,7 +111,9 @@ class GridViewCardItem extends StatelessWidget {
                   onTap: () {
                     ProductListTabViewModel.getBloc(context)
                         .addToCart(productEntity.id ?? '');
-                    //todo: add to cart
+                    DialogUtils.showSnackBar(
+                        context: context,
+                        message: 'Item successfully added to cart!');
                   },
                   splashColor: Colors.transparent,
                   child: Icon(

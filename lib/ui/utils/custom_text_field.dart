@@ -14,8 +14,7 @@ class TextFieldItem extends StatelessWidget {
   String? Function(String?)? validator;
   TextEditingController controller;
 
-  TextFieldItem(
-      {required this.fieldName,
+  TextFieldItem({super.key, required this.fieldName,
       required this.hintText,
       this.suffixIcon,
       this.isSuffixIcon,
@@ -46,19 +45,19 @@ class TextFieldItem extends StatelessWidget {
               filled: true,
               suffixIcon: suffixIcon,
               enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.blueGreyColor),
+                  borderSide: const BorderSide(color: AppColors.blueGreyColor),
                   borderRadius: BorderRadius.circular(15.r)),
               focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.blueGreyColor),
+                  borderSide: const BorderSide(color: AppColors.blueGreyColor),
                   borderRadius: BorderRadius.circular(15.r)),
               errorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.blueGreyColor),
+                  borderSide: const BorderSide(color: AppColors.blueGreyColor),
                   borderRadius: BorderRadius.circular(15.r)),
               focusedErrorBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.blueGreyColor),
+                  borderSide: const BorderSide(color: AppColors.blueGreyColor),
                   borderRadius: BorderRadius.circular(15.r)),
             ),
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             validator: validator,
             controller: controller,
             obscureText: isObscure,

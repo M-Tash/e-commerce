@@ -47,3 +47,13 @@ class UpdateItemCountSuccessState extends CartStates {
 
   UpdateItemCountSuccessState({required this.cartResponseEntity});
 }
+
+class CheckOutLoadingState extends CartStates {}
+
+class CheckOutErrorState extends CartStates {}
+
+class CheckOutSuccessState extends CartStates {
+  String? token;
+
+  CheckOutSuccessState({required this.token});
+}

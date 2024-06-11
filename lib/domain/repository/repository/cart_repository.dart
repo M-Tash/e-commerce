@@ -11,4 +11,6 @@ abstract class CartRepository {
 
   Future<Either<Failures, CartResponseEntity>> updateItemInCart(
       String productId, int count);
+
+  Future<String?> checkOutItemsInCart(int amount);
 }

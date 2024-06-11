@@ -1,5 +1,6 @@
 class ApiConstants {
   static const String baseUrl = 'ecommerce.routemisr.com';
+  static const String paymentBaseUrl = 'accept.paymob.com';
 }
 
 class ApiEndPoints {
@@ -10,4 +11,5 @@ class ApiEndPoints {
   static const String productsApi = '/api/v1/products';
   static const String cartApi = '/api/v1/cart';
   static const String wishListApi = '/api/v1/wishlist';
+  static const String paymentApi = '/v1/intention/';
 }

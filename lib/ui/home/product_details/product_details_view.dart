@@ -18,6 +18,8 @@ class ProductDetailsView extends StatelessWidget {
       getAllProductsUseCase: injectGetAllProductsUseCase(),
       addToCartUseCase: injectAddToCartUseCase());
 
+  ProductDetailsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     var args =
@@ -47,8 +49,8 @@ class ProductDetailsView extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(context, CartScreen.routeName);
               },
-              icon: Icon(Icons.shopping_cart_outlined),
-          ),
+              icon: const Icon(Icons.shopping_cart_outlined),
+            ),
         ],
       ),
       body: Padding(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/my_assets.dart';
-import '../../../../utils/my_colors.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../utils/my_assets.dart';
+import '../../../../utils/my_colors.dart';
 
 class AnnouncementsSection extends StatelessWidget {
   List<String> sliderImages = [
@@ -10,6 +11,8 @@ class AnnouncementsSection extends StatelessWidget {
     MyAssets.announcement2,
     MyAssets.announcement3
   ];
+
+  AnnouncementsSection({super.key});
 
   @override
   Widget build(BuildContext context) {

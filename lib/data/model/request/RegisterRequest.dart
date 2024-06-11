@@ -1,9 +1,3 @@
-/// name : "ahmed"
-/// email : "ahmedmutti1555@gmail.com"
-/// password : "Ahmed@123"
-/// rePassword : "Ahmed@123"
-/// phone : "01010700700"
-
 class RegisterRequest {
   RegisterRequest({
     this.name,

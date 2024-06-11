@@ -16,6 +16,8 @@ class HomeTab extends StatelessWidget {
       categoriesUseCase: injectGetAllCategoriesUseCase(),
       getAllBrandsUseCase: injectGetAllBrandsUseCase());
 
+  HomeTab({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeTabViewModel, HomeTabStates>(

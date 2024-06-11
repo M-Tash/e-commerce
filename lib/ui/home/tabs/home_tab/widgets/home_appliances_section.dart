@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/my_colors.dart';
-import '../../../widgets/item_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../utils/my_colors.dart';
+import '../../../widgets/item_card.dart';
+
 class HomeAppliancesSection extends StatelessWidget {
+  const HomeAppliancesSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(

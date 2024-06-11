@@ -11,11 +11,11 @@ class FirstIntroScreen extends StatelessWidget {
     return Stack(
       children: [
         Container(
-            alignment: Alignment(0, -0.1),
+            alignment: const Alignment(0, -0.1),
             child: Lottie.asset('assets/animations/welcome.json')),
         Container(
-          alignment: Alignment(0, 0.4),
-          child: Text(
+          alignment: const Alignment(0, 0.4),
+          child: const Text(
             "Welcome To Anubis Market",
             style: TextStyle(
                 fontSize: 25,

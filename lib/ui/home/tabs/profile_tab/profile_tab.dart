@@ -8,6 +8,8 @@ import '../../../utils/my_assets.dart';
 import '../../../utils/my_colors.dart';
 
 class ProfileTab extends StatefulWidget {
+  const ProfileTab({super.key});
+
   @override
   State<ProfileTab> createState() => _ProfileTabState();
 }

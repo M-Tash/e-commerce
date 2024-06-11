@@ -12,7 +12,7 @@ import 'cubit/product_list_tab_view_model.dart';
 import 'widgets/grid_view_card_item.dart';
 
 class ProductListTab extends StatefulWidget {
-  ProductListTab({super.key});
+  const ProductListTab({super.key});
 
   @override
   _ProductListTabState createState() => _ProductListTabState();

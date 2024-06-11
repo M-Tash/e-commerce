@@ -11,14 +11,17 @@ import '../auth/login/login_screen.dart';
 class IntroScreen extends StatefulWidget {
   static const String routeName = 'intro_screen';
 
+  const IntroScreen({super.key});
+
   @override
   State<IntroScreen> createState() => _IntroScreenState();
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  PageController _controller = PageController();
+  final PageController _controller = PageController();
   bool onLastPage = false;
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(

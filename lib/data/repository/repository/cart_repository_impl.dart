@@ -26,4 +26,9 @@ class CartRepositoryImpl implements CartRepository {
       String productId, int count) {
     return remoteDataSource.updateItemInCart(productId, count);
   }
+
+  @override
+  Future<String?> checkOutItemsInCart(int amount) {
+    return remoteDataSource.checkOutItemsInCart(amount);
+  }
 }

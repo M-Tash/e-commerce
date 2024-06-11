@@ -32,23 +32,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
       bloc: viewModel,
       listener: (context, state) async {
         if (state is RegisterLoadingState) {
-          bool isLoading = true;
+          setState(() {
+            isLoading = true;
+          });
         } else if (state is RegisterErrorState) {
-          bool isLoading = false;
+          setState(() {
+            isLoading = false;
+          });
           DialogUtils.showSnackBar(
               context: context, message: state.errorMessage!);
         } else if (state is RegisterSuccessState) {
-          bool isLoading = false;
+          setState(() {
+            isLoading = false;
+          });
           SharedPreference.saveData(
               key: 'Token', value: state.authResultEntity.token);
           SharedPreference.saveData(
               key: 'name', value: state.authResultEntity.userEntity!.name);
           SharedPreference.saveData(
               key: 'email', value: state.authResultEntity.userEntity!.email);
-          await Future.delayed(Duration(seconds: 1));
-          Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-          DialogUtils.showSnackBar(
-              context: context,
+          navigateHome(
               message:
                   'Welcome ${state.authResultEntity.userEntity?.name ?? ''}');
         }
@@ -62,7 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           resizeToAvoidBottomInset: false,
           body: Container(
             height: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
                       'assets/images/wallpaper.jpeg',
@@ -70,13 +73,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     fit: BoxFit.fill)),
             child: Column(
               children: [
-                SizedBox(
+                const SizedBox(
                   height: 85,
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   child: GlassContainer.clearGlass(
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topRight: Radius.circular(15),
                         topLeft: Radius.circular(15),
                         bottomLeft: Radius.circular(15),
@@ -158,11 +161,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       isSuffixIcon: true,
                                       suffixIcon: InkWell(
                                         child: viewModel.isObscure
-                                            ? Icon(
+                                            ? const Icon(
                                                 Icons.visibility_off,
                                                 color: Colors.white,
                                               )
-                                            : Icon(
+                                            : const Icon(
                                                 Icons.visibility,
                                                 color: Colors.white,
                                               ),
@@ -198,11 +201,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       isSuffixIcon: true,
                                       suffixIcon: InkWell(
                                         child: viewModel.isObscure
-                                            ? Icon(
+                                            ? const Icon(
                                                 Icons.visibility_off,
                                                 color: Colors.white,
                                               )
-                                            : Icon(
+                                            : const Icon(
                                                 Icons.visibility,
                                                 color: Colors.white,
                                               ),
@@ -235,7 +238,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               padding: EdgeInsets.only(top: 35.h),
                               child: ElevatedButton(
                                 onPressed: () {
-                                  //todo:register
                                   if (viewModel.formKey.currentState
                                           ?.validate() ==
                                       true) {
@@ -289,5 +291,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void navigateHome({required String message}) async {
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+    Future.delayed(const Duration(seconds: 1));
+    DialogUtils.showSnackBar(context: context, message: message);
   }
 }

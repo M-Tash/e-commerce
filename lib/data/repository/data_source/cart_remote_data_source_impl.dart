@@ -41,4 +41,10 @@ class CartRemoteDataSourceImpl implements CartRemoteDataSource {
       return Right(response);
     });
   }
+
+  @override
+  Future<String?> checkOutItemsInCart(int amount) async {
+    var response = await apiManager.createPayMobPayment(amount);
+    return response;
+  }
 }

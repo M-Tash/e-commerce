@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 class SplashScreen extends StatefulWidget {
   static const String routeName = 'splash_screen';
 
+  const SplashScreen({super.key});
+
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
@@ -31,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     // Delay navigation by 3 seconds
-    Timer(Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 2), () {
       // Ensure that the widget is still mounted before navigating
       if (mounted) {
         Navigator.of(context).pushReplacementNamed(route!);

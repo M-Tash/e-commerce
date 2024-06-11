@@ -2,6 +2,7 @@ import 'package:e_commerce/domain/entities/GetCartResponseEntity.dart';
 import 'package:e_commerce/ui/home/cart/cubit/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../domain/use_cases/check_out_Items_use_case.dart';
 import '../../../../domain/use_cases/delete_item_in_cart_use_case.dart';
 import '../../../../domain/use_cases/get_cart_use_case.dart';
 import '../../../../domain/use_cases/update_count_item_use_case.dart';
@@ -10,11 +11,13 @@ class CartViewModel extends Cubit<CartStates> {
   GetCartUseCase getCartUseCase;
   DeleteItemInCartUseCase deleteItemInCartUseCase;
   UpdateItemInCartUseCase updateItemInCartUseCase;
+  CheckOutItemsUseCase checkOutItemsUseCase;
 
   CartViewModel(
       {required this.getCartUseCase,
       required this.deleteItemInCartUseCase,
-      required this.updateItemInCartUseCase})
+      required this.updateItemInCartUseCase,
+      required this.checkOutItemsUseCase})
       : super(CartInitState());
   List<GetProductsEntity> cartItemsList = [];
 
@@ -51,5 +54,12 @@ class CartViewModel extends Cubit<CartStates> {
       cartItemsList = response.data!.products ?? [];
       emit(CartSuccessState(cartResponseEntity: response));
     });
+  }
+
+  Future<String?> checkOutItems(int amount) async {
+    emit(CheckOutLoadingState());
+    var token = await checkOutItemsUseCase.invoke(amount);
+    emit(CheckOutSuccessState(token: token));
+    return token;
   }
 }

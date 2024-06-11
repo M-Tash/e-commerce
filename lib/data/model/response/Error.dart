@@ -1,7 +1,3 @@
-/// value : "010107007001"
-/// msg : "accept only egypt phone numbers"
-/// param : "phone"
-/// location : "body"
 
 class Error {
   Error({

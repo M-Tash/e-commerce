@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'my_assets.dart';
 import 'my_colors.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextFieldItem extends StatelessWidget {
   String fieldName;
@@ -13,8 +14,7 @@ class CustomTextFieldItem extends StatelessWidget {
   String? Function(String?)? validator;
   TextEditingController controller;
 
-  CustomTextFieldItem(
-      {required this.fieldName,
+  CustomTextFieldItem({super.key, required this.fieldName,
       required this.hintText,
       this.suffixIcon,
       this.isObscure = false,
@@ -44,7 +44,7 @@ class CustomTextFieldItem extends StatelessWidget {
               filled: true,
               suffixIcon: InkWell(
                   onTap: suffixIconFunction,
-                  child: ImageIcon(AssetImage(MyAssets.editIcon))),
+                  child: const ImageIcon(AssetImage(MyAssets.editIcon))),
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.blueGreyColor),
                   borderRadius: BorderRadius.circular(15.r)),
@@ -60,7 +60,7 @@ class CustomTextFieldItem extends StatelessWidget {
                   .titleMedium!
                   .copyWith(color: AppColors.greyColor),
             ),
-            style: TextStyle(color: AppColors.blackColor),
+            style: const TextStyle(color: AppColors.blackColor),
             validator: validator,
             controller: controller,
             obscureText: isObscure,

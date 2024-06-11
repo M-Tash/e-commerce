@@ -15,8 +15,8 @@ class DialogUtils {
             backgroundColor: AppColors.blueColor,
             content: Row(
               children: [
-                CircularProgressIndicator(color: AppColors.whiteColor),
-                SizedBox(
+                const CircularProgressIndicator(color: AppColors.whiteColor),
+                const SizedBox(
                   width: 12,
                 ),
                 Text(message)
@@ -35,6 +35,7 @@ class DialogUtils {
     required String message,
   }) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(milliseconds: 1500),
       backgroundColor: AppColors.primaryColor,
       content: Center(
         child: Text(
@@ -49,7 +50,7 @@ class DialogUtils {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
-      margin: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16.0),
       elevation: 6.0,
     ));
   }

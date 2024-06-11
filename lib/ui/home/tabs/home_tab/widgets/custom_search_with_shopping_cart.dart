@@ -10,7 +10,8 @@ class CustomSearchWithShoppingCart extends StatelessWidget {
   final TextEditingController searchController;
   final ValueChanged<String> onSearchChanged;
 
-  CustomSearchWithShoppingCart({
+  const CustomSearchWithShoppingCart({
+    super.key,
     required this.searchController,
     required this.onSearchChanged,
   });

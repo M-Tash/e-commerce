@@ -10,14 +10,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(430, 932),
+      designSize: const Size(430, 932),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
@@ -25,16 +27,13 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           initialRoute: SplashScreen.routeName,
           routes: {
-            SplashScreen.routeName: (context) => SplashScreen(),
-            IntroScreen.routeName: (context) => IntroScreen(),
+            SplashScreen.routeName: (context) => const SplashScreen(),
+            IntroScreen.routeName: (context) => const IntroScreen(),
             RegisterScreen.routeName: (context) => RegisterScreen(),
-            LoginScreen.routeName: (context) => LoginScreen(),
-            HomeScreen.routeName: (context) => HomeScreen(),
+            LoginScreen.routeName: (context) => const LoginScreen(),
+            HomeScreen.routeName: (context) => const HomeScreen(),
             ProductDetailsView.routeName: (context) => ProductDetailsView(),
             CartScreen.routeName: (context) => CartScreen(),
-            // SplashScreen.routeName:(context)=> SplashScreen(),
-            // SplashScreen.routeName:(context)=> SplashScreen(),
-            // SplashScreen.routeName:(context)=> SplashScreen(),
           },
           theme: AppTheme.mainTheme,
         );

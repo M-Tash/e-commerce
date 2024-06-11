@@ -7,7 +7,8 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController searchController;
   final ValueChanged<String> onChanged;
 
-  CustomTextField({required this.searchController, required this.onChanged});
+  const CustomTextField(
+      {super.key, required this.searchController, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {

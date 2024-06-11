@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:e_commerce/domain/di.dart';
 import 'package:e_commerce/ui/home/cart/cubit/cart_view_model.dart';
 import 'package:e_commerce/ui/home/cart/cubit/states.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/my_colors.dart';
 import 'widget/cart_item.dart';
@@ -14,7 +17,10 @@ class CartScreen extends StatelessWidget {
   CartViewModel viewModel = CartViewModel(
       getCartUseCase: injectGetCartUseCase(),
       deleteItemInCartUseCase: injectDeleteItemInCartUseCase(),
-      updateItemInCartUseCase: injectUpdateItemInCartUseCase());
+      updateItemInCartUseCase: injectUpdateItemInCartUseCase(),
+      checkOutItemsUseCase: injectCheckOutItemsUseCase());
+
+  CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +91,17 @@ class CartScreen extends StatelessWidget {
                     ],
                   ),
                   InkWell(
-                    onTap: () {
-                                  //todo: check out
-                                  //logic here
-                    },
+                              onTap: () async {
+                                var token = await viewModel.checkOutItems(state
+                                    .cartResponseEntity.data!.totalCartPrice!
+                                    .toInt());
+                                //todo: check out
+                                _launchUrl(
+                                    'https://accept.paymob.com/api/acceptance/iframes/851418?payment_token=$token');
+                                Timer(const Duration(seconds: 2), () {
+                                  Navigator.pop(context);
+                                }); //logic here
+                              },
                     child: Container(
                                   height: 70.h,
                                   width: 250.w,
@@ -126,11 +139,18 @@ class CartScreen extends StatelessWidget {
           ],
                     )
                   : Center(
-                      child: Lottie.asset('assets/animations/loading.json',
+                    child: Lottie.asset('assets/animations/loading.json',
                           width: 180),
-                    ));
+                  ),
+          );
         },
       ),
     );
+  }
+
+  Future<void> _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) {
+      throw Exception('Could not launch $url');
+    }
   }
 }

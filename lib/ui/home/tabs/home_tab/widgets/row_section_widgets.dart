@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/my_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../utils/my_colors.dart';
 
 class RowSectionWidget extends StatelessWidget {
   String name;
 
-  RowSectionWidget({required this.name});
+  RowSectionWidget({super.key, required this.name});
 
   @override
   Widget build(BuildContext context) {

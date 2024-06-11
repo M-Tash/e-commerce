@@ -1,6 +1,3 @@
-/// name : "ahmed"
-/// email : "ahmedmutti1555@gmail.com"
-/// role : "user"
 
 class UserEntity {
   UserEntity({

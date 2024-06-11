@@ -16,6 +16,8 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 class LoginScreen extends StatefulWidget {
   static const String routeName = 'login_screen';
 
+  const LoginScreen({super.key});
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
@@ -50,10 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 key: 'name', value: state.authResultEntity.userEntity!.name);
             SharedPreference.saveData(
                 key: 'email', value: state.authResultEntity.userEntity!.email);
-            await Future.delayed(Duration(seconds: 1)); // Short delay
-            Navigator.pushReplacementNamed(context, HomeScreen.routeName);
-            DialogUtils.showSnackBar(
-                context: context,
+            navigateHome(
                 message:
                     'Welcome Back ${state.authResultEntity.userEntity?.name ?? ''}');
             setState(() {
@@ -71,20 +70,20 @@ class _LoginScreenState extends State<LoginScreen> {
             resizeToAvoidBottomInset: false,
             body: Container(
               height: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage('assets/images/wallpaper.jpeg'),
                       fit: BoxFit.fill)),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 230,
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
                     child: GlassContainer.clearGlass(
                       blur: 5,
-                      borderRadius: BorderRadius.only(
+                      borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(15),
                           topLeft: Radius.circular(15),
                           bottomLeft: Radius.circular(15),
@@ -104,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
@@ -149,11 +148,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                         isSuffixIcon: true,
                                         suffixIcon: InkWell(
                                           child: viewModel.isObscure
-                                              ? Icon(
+                                              ? const Icon(
                                                   Icons.visibility_off,
                                                   color: Colors.white,
                                                 )
-                                              : Icon(
+                                              : const Icon(
                                                   Icons.visibility,
                                                   color: Colors.white,
                                                 ),
@@ -176,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           return null;
                                         },
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 3,
                                       )
                                     ],
@@ -243,6 +242,13 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ));
+  }
+
+  void navigateHome({required String message}) async {
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+    Future.delayed(const Duration(seconds: 1));
+    DialogUtils.showSnackBar(context: context, message: message);
   }
 }
 

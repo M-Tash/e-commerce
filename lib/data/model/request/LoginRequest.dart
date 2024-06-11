@@ -1,6 +1,3 @@
-/// email : "ahmedmutti1555@gmail.com"
-/// password : "Ahmed@123"
-
 class LoginRequest {
   LoginRequest({
     this.email,

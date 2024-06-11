@@ -10,6 +10,7 @@ import 'package:e_commerce/domain/repository/data_source/home_remote_data_source
 import 'package:e_commerce/domain/repository/repository/auth_repository.dart';
 import 'package:e_commerce/domain/repository/repository/cart_repository.dart';
 import 'package:e_commerce/domain/repository/repository/home_repository.dart';
+import 'package:e_commerce/domain/use_cases/check_out_Items_use_case.dart';
 import 'package:e_commerce/domain/use_cases/delete_item_in_cart_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_all_brands_use_case.dart';
 import 'package:e_commerce/domain/use_cases/get_all_categories_use_case.dart';
@@ -72,6 +73,10 @@ DeleteItemInCartUseCase injectDeleteItemInCartUseCase() {
 
 UpdateItemInCartUseCase injectUpdateItemInCartUseCase() {
   return UpdateItemInCartUseCase(cartRepository: injectCartRepository());
+}
+
+CheckOutItemsUseCase injectCheckOutItemsUseCase() {
+  return CheckOutItemsUseCase(cartRepository: injectCartRepository());
 }
 
 CartRepository injectCartRepository() {

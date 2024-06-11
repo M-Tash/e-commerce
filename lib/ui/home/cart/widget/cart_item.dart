@@ -1,8 +1,8 @@
 import 'package:e_commerce/ui/home/cart/cubit/cart_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import '../../../../domain/entities/GetCartResponseEntity.dart';
-import '../../../utils/my_assets.dart';
 import '../../../utils/my_colors.dart';
 
 class CartItem extends StatelessWidget {
@@ -114,7 +114,6 @@ class CartItem extends StatelessWidget {
                                               .updateItemCount(
                                                   cartEntity.product!.id ?? '',
                                                   counter);
-                                      //todo: decrement count
                                     },
                                     icon: Icon(
                                       Icons.remove_circle_outline_rounded,
@@ -138,7 +137,6 @@ class CartItem extends StatelessWidget {
                                           .updateItemCount(
                                               cartEntity.product!.id ?? '',
                                               counter);
-                                      //todo: increment count
                                     },
                                     icon: Icon(
                                       Icons.add_circle_outline_rounded,

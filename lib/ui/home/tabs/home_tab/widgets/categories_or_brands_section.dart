@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+
 import '../../../../../domain/entities/CategoryOrBrandResponseEntity.dart';
 import 'category_item.dart';
 
 class CategoriesOrBrandsSection extends StatelessWidget {
   final List<CategoryOrBrandEntity> list;
 
-  CategoriesOrBrandsSection({required this.list});
+  const CategoriesOrBrandsSection({super.key, required this.list});
 
   @override
   Widget build(BuildContext context) {
