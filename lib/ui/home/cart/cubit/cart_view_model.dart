@@ -35,7 +35,7 @@ class CartViewModel extends Cubit<CartStates> {
   }
 
   void deleteItemInCart(String productId) async {
-    emit(DeleteItemInCartLoadingState());
+    emit(CartLoadingState());
     var either = await deleteItemInCartUseCase.invoke(productId);
     either.fold((l) {
       emit(DeleteItemInCartErrorState(errors: l));
@@ -45,8 +45,23 @@ class CartViewModel extends Cubit<CartStates> {
     });
   }
 
+  void deleteAllItemsInCart() async {
+    emit(DeleteAllItemsInCartLoadingState());
+    var either = await deleteItemInCartUseCase.invokeALlItems();
+    either.fold((l) {
+      emit(DeleteAllItemsInCartErrorState(errors: l));
+    }, (response) {
+      if (response.data != null && response.data!.products != null) {
+        cartItemsList = response.data!.products!;
+      } else {
+        cartItemsList = [];
+      }
+      emit(DeleteAllItemsInCartSuccessState());
+    });
+  }
+
   void updateItemCount(String productId, int count) async {
-    emit(UpdateItemCountLoadingState());
+    emit(CartLoadingState());
     var either = await updateItemInCartUseCase.invoke(productId, count);
     either.fold((l) {
       emit(UpdateItemCountErrorState(errors: l));

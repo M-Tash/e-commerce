@@ -153,6 +153,22 @@ class ApiManager {
     );
   }
 
+  Future<Either<Failures, GetCartResponseDto>> deleteAllItemsInCart() async {
+    Uri url = Uri.https(ApiConstants.baseUrl, ApiEndPoints.cartApi);
+    var token = SharedPreference.getData(key: 'Token');
+    dynamic headers = {'token': token.toString()};
+    var result = await apiHelper.delete(
+        url: url,
+        errorMessage: 'Failed to fetch Products. Please try again.',
+        headers: headers);
+    return result.fold(
+      (failure) => Left(failure),
+      (jsonResponse) => Right(
+        GetCartResponseDto.fromJson(jsonResponse),
+      ),
+    );
+  }
+
   Future<Either<Failures, GetCartResponseDto>> updateItemCount(
       String productId, int count) async {
     Uri url =

@@ -9,6 +9,8 @@ abstract class CartRemoteDataSource {
   Future<Either<Failures, CartResponseEntity>> deleteItemInCart(
       String productId);
 
+  Future<Either<Failures, CartResponseEntity>> deleteAllItemsInCart();
+
   Future<Either<Failures, CartResponseEntity>> updateItemInCart(
       String productId, int count);
 

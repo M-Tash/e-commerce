@@ -12,4 +12,8 @@ class DeleteItemInCartUseCase {
   Future<Either<Failures, CartResponseEntity>> invoke(String productId) {
     return cartRepository.deleteItemInCart(productId);
   }
+
+  Future<Either<Failures, CartResponseEntity>> invokeALlItems() {
+    return cartRepository.deleteAllItemsInCart();
+  }
 }

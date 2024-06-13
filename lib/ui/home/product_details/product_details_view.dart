@@ -7,6 +7,7 @@ import 'package:readmore/readmore.dart';
 
 import '../../../domain/di.dart';
 import '../../utils/custom_image_network.dart';
+import '../../utils/dialog_utils.dart';
 import '../../utils/my_assets.dart';
 import '../../utils/my_colors.dart';
 import '../cart/cart_screen.dart';
@@ -250,6 +251,9 @@ class ProductDetailsView extends StatelessWidget {
                     child: ElevatedButton(
                         onPressed: () {
                           onAddToCart();
+                          DialogUtils.showSnackBar(
+                              context: context,
+                              message: 'Item successfully added to cart!');
                         },
                         style: TextButton.styleFrom(
                         backgroundColor: AppColors.primaryColor,

@@ -35,8 +35,7 @@ class CartScreen extends StatelessWidget {
           elevation: 0,
           leading: IconButton(
             onPressed: () {
-              // Button logic here
-              Navigator.pop(context);
+                    Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back, color: Theme.of(context).primaryColor),
           ),
@@ -47,14 +46,25 @@ class CartScreen extends StatelessWidget {
                 .titleLarge!
                 .copyWith(color: Theme.of(context).primaryColor),
           ),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.delete_sweep,
+                        color: AppColors.primaryColor),
+                    onPressed: () {
+                      deleteAllItems(context);
+                    },
+                  ),
+                ],
               ),
-              body: state is CartSuccessState
-                  ? Column(
+              body: BlocBuilder<CartViewModel, CartStates>(
+                builder: (context, state) {
+                  if (state is CartSuccessState) {
+                    return Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            itemBuilder: (context, index) {
                               return CartItem(
                                 cartEntity: state
                                     .cartResponseEntity.data!.products![index],
@@ -63,86 +73,98 @@ class CartScreen extends StatelessWidget {
                             itemCount:
                                 state.cartResponseEntity.data!.products!.length,
                           ),
-            ),
-            Padding(
+                        ),
+                        Padding(
                           padding: EdgeInsets.only(
                               bottom: 20.h, top: 20.h, left: 16.w, right: 16.w),
                           child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 12.h),
-                        child: Text('Total Price',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium
-                                ?.copyWith(color: AppColors.greyColor)),
-                      ),
-                                  Text(
-                                      'EGP ${state.cartResponseEntity.data!.totalCartPrice}',
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 12.h),
+                                    child: Text(
+                                      'Total Price',
                                       style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.primaryColor)),
-                    ],
-                  ),
-                  InkWell(
-                              onTap: () async {
-                                var token = await viewModel.checkOutItems(state
-                                    .cartResponseEntity.data!.totalCartPrice!
-                                    .toInt());
-                                //todo: check out
-                                _launchUrl(
-                                    'https://accept.paymob.com/api/acceptance/iframes/851418?payment_token=$token');
-                                Timer(const Duration(seconds: 2), () {
-                                  Navigator.pop(context);
-                                }); //logic here
-                              },
-                    child: Container(
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(
+                                              color: AppColors.greyColor),
+                                    ),
+                                  ),
+                                  Text(
+                                    'EGP ${state.cartResponseEntity.data!.totalCartPrice}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            fontWeight: FontWeight.bold,
+                                            color: AppColors.primaryColor),
+                                  ),
+                                ],
+                              ),
+                              InkWell(
+                                onTap: () async {
+                                  var token = await viewModel.checkOutItems(
+                                      state.cartResponseEntity.data!
+                                          .totalCartPrice!
+                                          .toInt());
+                                  //todo: check out
+                                  _launchUrl(
+                                      'https://accept.paymob.com/api/acceptance/iframes/851418?payment_token=$token');
+                                  Timer(const Duration(seconds: 2), () {
+                                    Navigator.pop(context);
+                                  }); //logic here
+                                },
+                                child: Container(
                                   height: 70.h,
                                   width: 250.w,
                                   decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.r),
-                          color: Theme.of(context).primaryColor),
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 12.h, bottom: 12.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Padding(
+                                      borderRadius: BorderRadius.circular(20.r),
+                                      color: Theme.of(context).primaryColor),
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 12.h, bottom: 12.h),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        Padding(
                                           padding: EdgeInsets.only(left: 50.w),
                                           child: Text('Check out',
-                                  style: Theme.of(context)
+                                              style: Theme.of(context)
                                                   .textTheme
                                                   .titleMedium!
                                                   .copyWith(fontSize: 20)),
                                         ),
-                            Padding(
+                                        Padding(
                                           padding: EdgeInsets.only(
                                               left: 27.w, right: 20.w),
                                           child: Icon(Icons.arrow_forward,
                                               size: 30.w,
                                               color: AppColors.whiteColor),
                                         ),
-                          ],
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-                    )
-                  : Center(
-                    child: Lottie.asset('assets/animations/loading.json',
+                      ],
+                    );
+                  } else if (state is CartLoadingState) {
+                    return Center(
+                      child: Lottie.asset('assets/animations/loading.json',
                           width: 180),
-                  ),
-          );
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ));
         },
       ),
     );
@@ -152,5 +174,9 @@ class CartScreen extends StatelessWidget {
     if (!await launchUrl(Uri.parse(url))) {
       throw Exception('Could not launch $url');
     }
+  }
+
+  void deleteAllItems(BuildContext context) {
+    CartViewModel.get(context).deleteAllItemsInCart();
   }
 }

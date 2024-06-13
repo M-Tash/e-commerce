@@ -22,6 +22,11 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
+  Future<Either<Failures, CartResponseEntity>> deleteAllItemsInCart() {
+    return remoteDataSource.deleteAllItemsInCart();
+  }
+
+  @override
   Future<Either<Failures, CartResponseEntity>> updateItemInCart(
       String productId, int count) {
     return remoteDataSource.updateItemInCart(productId, count);
