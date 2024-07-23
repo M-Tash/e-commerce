@@ -31,6 +31,10 @@ This is an e-commerce application built with Flutter that follows the Clean Arch
 4. Proceed to checkout, enter shipping and payment details, and complete the order.
 5. Enjoy a seamless shopping experience with smooth animations throughout the app.
 
+
+## Demo 
+ https://github.com/user-attachments/assets/dd4a11d6-ff94-4e1a-a6f7-8778e7ed03f7 
+
 ## Screenshots
 <img src="https://github.com/M-Tash/e-commerce/assets/158067954/1f82b164-c10c-46d3-b466-8b11a283e8cd" alt="Splash" width="20%">
 <img src="https://github.com/M-Tash/e-commerce/assets/158067954/a0ff1784-ef85-43c2-a918-d2e4bbe64f6e" alt="Intro 1" width="20%">
