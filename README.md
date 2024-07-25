@@ -49,9 +49,3 @@ This is an e-commerce application built with Flutter that follows the Clean Arch
 <img src="https://github.com/M-Tash/e-commerce/assets/158067954/23ac5242-a5a9-4553-9892-08af4fd43b03" alt="profile" width="20%">
 
 
-## Installation
-
-- Clone the repository:
-
-```bash
-git clone https://github.com/M-Tash/e-commerce
